@@ -1,11 +1,8 @@
-using ESCPOS_NET.Emitters.BaseCommandValues;
 using ESCPOS_NET.Utilities;
-using ESCPOS_NET.Utils;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -30,8 +27,6 @@ namespace ESCPOS_NET
         public event EventHandler StatusChanged;
         public event EventHandler Disconnected;
         public event EventHandler Connected;
-        //public event EventHandler WriteFailed;
-        //public event EventHandler Idle;
 
         protected BinaryWriter Writer { get; set; }
         protected BinaryReader Reader { get; set; }
@@ -173,7 +168,7 @@ namespace ESCPOS_NET
                         DataAvailable();
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     // Swallow the exception
                     //Logging.Logger?.LogDebug("[{Function}]:[{PrinterName}] Swallowing generic read exception... sometimes happens with serial port printers.", $"{this}.{MethodBase.GetCurrentMethod().Name}", PrinterName);
@@ -258,7 +253,7 @@ namespace ESCPOS_NET
             }
         }
 
-        protected virtual void Flush(object sender, ElapsedEventArgs e)
+        public virtual void Flush(object sender, ElapsedEventArgs e)
         {
             try
             {

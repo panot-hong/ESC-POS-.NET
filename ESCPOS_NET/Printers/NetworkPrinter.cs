@@ -2,13 +2,9 @@
 using SimpleTcp;
 using System;
 using System.IO;
-using System.Net;
-using System.Text.Json;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Net.Sockets;
 
 namespace ESCPOS_NET
 {
@@ -70,7 +66,7 @@ namespace ESCPOS_NET
                 //_tcpConnection.ConnectWithRetries(300000);
                 _tcpConnection.ConnectWithRetries(3000);
             }
-            catch (TimeoutException)
+            catch
             {
                 //Logging.Logger?.LogWarning("[{Function}]:[{PrinterName}] Network printer unable to connect after 5 minutes. Attempting to reconnect. Settings: {Settings}", $"{this}.{MethodBase.GetCurrentMethod().Name}", PrinterName, JsonSerializer.Serialize(_settings));
                 await Task.Delay(250);

@@ -1,7 +1,12 @@
+using ESCPOS_NET.Emitters.BaseCommandValues;
+using System.Text;
+
 namespace ESCPOS_NET.Emitters
 {
     public interface ICommandEmitter
     {
+        Encoding Encoding { get; set; }
+
         /* Print Commands */
         byte[] PrintLine(string line = null);
 
@@ -72,9 +77,23 @@ namespace ESCPOS_NET.Emitters
 
         byte[] EnableAutomaticInkStatusBack();
 
+        byte[] DisableAutomaticStatusBack();
+
+        byte[] DisableAutomaticInkStatusBack();
+
+        byte[] RequestOnlineStatus();
+
+        byte[] RequestPaperStatus();
+
+        byte[] RequestDrawerStatus();
+
+        byte[] RequestInkStatus();
+
+
         /* Barcode Commands */
         byte[] PrintBarcode(BarcodeType type, string barcode, BarcodeCode code = BarcodeCode.CODE_B);
 
+        /* 2D-Code Commands */
         byte[] PrintQRCode(string data, TwoDimensionCodeType type = TwoDimensionCodeType.QRCODE_MODEL2, Size2DCode size = Size2DCode.NORMAL, CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7);
 
         byte[] Print2DCode(TwoDimensionCodeType type, string data, Size2DCode size = Size2DCode.NORMAL, CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7);
@@ -86,7 +105,5 @@ namespace ESCPOS_NET.Emitters
         byte[] SetBarLabelPosition(BarLabelPrintPosition position);
 
         byte[] SetBarLabelFontB(bool fontB);
-
-        /* 2D-Code Commands */
     }
 }
